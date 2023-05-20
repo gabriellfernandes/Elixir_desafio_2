@@ -4,7 +4,7 @@ defmodule ReportsGenerator.MapUsersAndFoodsTest do
   alias ReportsGenerator.Parser
 
   describe "report_acc/1" do
-    test "report the file" do
+    test "init report map" do
       file_name = "report_test.csv"
 
       response =

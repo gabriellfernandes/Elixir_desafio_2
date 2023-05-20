@@ -4,7 +4,7 @@ defmodule ReportsGeneratorTest do
   @file_name "report_test.csv"
 
   describe "build/1" do
-    test "Vericando se build retonou o relatorio buildado" do
+    test "build the report" do
       response =
         @file_name
         |> ReportsGenerator.build()
@@ -36,7 +36,7 @@ defmodule ReportsGeneratorTest do
   end
 
   describe "fecth_higher_cost/2" do
-    test "Testando o usuario que mais gastou" do
+    test "test option users" do
       response =
         @file_name
         |> ReportsGenerator.build()
@@ -47,13 +47,24 @@ defmodule ReportsGeneratorTest do
       assert expected_response == response
     end
 
-    test "Testando a comida mais pedida" do
+    test "test opiton foods" do
       response =
         @file_name
         |> ReportsGenerator.build()
         |> ReportsGenerator.fecth_higher_cost("foods")
 
       expected_response = {:ok, {"esfirra", 3}}
+
+      assert expected_response == response
+    end
+
+    test "test invalid opition" do
+      response =
+        @file_name
+        |> ReportsGenerator.build()
+        |> ReportsGenerator.fecth_higher_cost("test")
+
+      expected_response = {:error, "Invalid option!"}
 
       assert expected_response == response
     end
