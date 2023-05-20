@@ -31,7 +31,55 @@ defmodule ReportsGeneratorTest do
         }
       }
 
-      assert expected_response == response
+      assert response == expected_response
+    end
+  end
+
+  describe "build_many/1" do
+    test "build the report whith Task" do
+      file_names = ["report_test.csv", "report_test.csv"]
+
+      response =
+        file_names
+        |> ReportsGenerator.build_many()
+
+      expected_response =
+        {:ok,
+         %{
+           "foods" => %{
+             "açaí" => 2,
+             "churrasco" => 4,
+             "esfirra" => 6,
+             "hambúrguer" => 4,
+             "pizza" => 4
+           },
+           "users" => %{
+             "1" => 96,
+             "10" => 72,
+             "2" => 90,
+             "3" => 62,
+             "4" => 84,
+             "5" => 98,
+             "6" => 36,
+             "7" => 54,
+             "8" => 50,
+             "9" => 48
+           }
+         }}
+
+      assert response == expected_response
+    end
+
+    test "invalid type list" do
+      file_names = "banana"
+
+      response =
+        file_names
+        |> ReportsGenerator.build_many()
+
+      expected_response = {:error, "please send a list of strings"}
+
+      assert response == expected_response
     end
   end
 
@@ -44,10 +92,10 @@ defmodule ReportsGeneratorTest do
 
       expected_response = {:ok, {"5", 49}}
 
-      assert expected_response == response
+      assert response == expected_response
     end
 
-    test "test opiton foods" do
+    test "test option foods" do
       response =
         @file_name
         |> ReportsGenerator.build()
@@ -55,10 +103,10 @@ defmodule ReportsGeneratorTest do
 
       expected_response = {:ok, {"esfirra", 3}}
 
-      assert expected_response == response
+      assert response == expected_response
     end
 
-    test "test invalid opition" do
+    test "test invalid option" do
       response =
         @file_name
         |> ReportsGenerator.build()
@@ -66,7 +114,7 @@ defmodule ReportsGeneratorTest do
 
       expected_response = {:error, "Invalid option!"}
 
-      assert expected_response == response
+      assert response == expected_response
     end
   end
 end

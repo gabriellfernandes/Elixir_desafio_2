@@ -24,7 +24,7 @@ defmodule ReportsGenerator.ParseTest do
         ["10", "churrasco", 36]
       ]
 
-      assert expected_response == response
+      assert response == expected_response
     end
   end
 end
