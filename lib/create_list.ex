@@ -1,6 +1,4 @@
 defmodule ReportsGenerator.MapUsersAndFoods do
-  alias ReportsGenerator.Parser
-
   def report_acc(file) do
     file
     |> Enum.reduce(%{"users" => %{}, "foods" => %{}}, fn line, report ->

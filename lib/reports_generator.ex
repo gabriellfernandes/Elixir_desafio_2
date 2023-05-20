@@ -2,6 +2,7 @@ defmodule ReportsGenerator do
   alias ReportsGenerator.MapUsersAndFoods
   alias ReportsGenerator.Parser
 
+  @options ["foods", "users"]
 
   def build(fileName) do
     file =
@@ -14,7 +15,10 @@ defmodule ReportsGenerator do
     end)
   end
 
-  def fecth_higher_cost(report), do: Enum.max_by(report, fn {_key, value} -> value end)
+  def fecth_higher_cost(report, option) when option in @options,
+    do: {:ok, Enum.max_by(report[option], fn {_key, value} -> value end)}
+
+  def fecth_higher_cost(_report, _option), do: {:error, "Invalid option!"}
 
   defp sum_values([id, food_name, price], %{"users" => users, "foods" => foods} = report) do
     users = Map.put(users, id, users[id] + price)
